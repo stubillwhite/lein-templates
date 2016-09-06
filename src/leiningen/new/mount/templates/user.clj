@@ -1,0 +1,32 @@
+(ns user
+  "Tools for interactive development with the REPL. This file should
+  not be included in a production build of the application."
+  (:require [clojure.java.javadoc :refer [javadoc]]
+            [clojure.pprint :refer [pprint print-table]]
+            [clojure.reflect :refer [reflect]]
+            [clojure.repl :refer [apropos dir doc find-doc pst source]]
+            [clojure.stacktrace :refer [print-stack-trace]]
+            [clojure.test :as test]
+            [clojure.tools.namespace.repl :refer [refresh refresh-all]]
+            [clojure.tools.trace :refer [trace-ns untrace-ns]]
+            [mount.core :as mount]
+            [{{main-ns}}.config :refer [config]]
+            [{{main-ns}}.app :refer [nrepl]]))
+
+(defn print-methods [x]
+  (->> x
+       reflect
+       :members 
+       (filter #(contains? (:flags %) :public))
+       (sort-by :name)
+       print-table))
+
+(defn start []
+  (mount/start))
+
+(defn stop []
+  (mount/stop))
+
+(defn reset []
+  (stop)
+  (refresh :after 'user/start))
