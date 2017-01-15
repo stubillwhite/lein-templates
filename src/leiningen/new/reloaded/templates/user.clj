@@ -7,6 +7,7 @@
             [clojure.repl :refer [apropos dir doc find-doc pst source]]
             [clojure.stacktrace :refer [print-stack-trace]]
             [clojure.test :as test]
+            [clojure.edn :as edn]
             [clojure.tools.namespace.repl :refer [refresh refresh-all]]
             [clojure.tools.trace :refer [trace-ns untrace-ns]]
             [{{main-ns}}.system :as system]
@@ -19,6 +20,12 @@
        (filter #(contains? (:flags %) :public))
        (sort-by :name)
        print-table))
+
+(defn write-object [fnam obj]
+  (spit fnam (prn-str obj)))
+
+(defn read-object [fnam]
+  (edn/read-string (slurp fnam)))
 
 (def system
   "A Var containing an object representing the application under development."

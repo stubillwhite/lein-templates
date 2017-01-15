@@ -4,6 +4,9 @@
 
 (def render (renderer "reloaded/templates"))
 
+(defn common-file [fnam]
+  (str "../../common/templates/" fnam))
+
 (defn reloaded
   "Project using Stuart Sierra's reloaded workflow."
   [name]
@@ -18,13 +21,13 @@
                   :main-ns    (sanitize-ns name)
                   :path       (name-to-path name)}]
       (->files config
-               [".projectile"                   (render ".projectile"    config)]
-               [".gitignore"                    (render ".gitignore"     config)]
-               ["epl-v10.html"                  (render "epl-v10.html"   config)]
-               ["README.md"                     (render "README.md"      config)]
-               ["project.clj"                   (render "project.clj"    config)]
-               ["src/{{path}}/core.clj"         (render "core.clj"       config)]
-               ["src/{{path}}/system.clj"       (render "system.clj"     config)]
-               ["src/{{path}}/utils.clj"        (render "utils.clj"      config)]
-               ["test/{{path}}/core_test.clj"   (render "core_test.clj"  config)]
-               ["dev/user.clj"                  (render "user.clj"       config)]))))
+               [".projectile"                   (render (common-file ".projectile")    config)]
+               [".gitignore"                    (render (common-file ".gitignore")     config)]
+               ["README.md"                     (render (common-file "README.md")      config)]
+               ["epl-v10.html"                  (render (common-file "epl-v10.html")   config)]
+               ["project.clj"                   (render "project.clj"                  config)]
+               ["src/{{path}}/core.clj"         (render "core.clj"                     config)]
+               ["src/{{path}}/system.clj"       (render "system.clj"                   config)]
+               ["src/{{path}}/utils.clj"        (render (common-file "utils.clj")      config)]
+               ["test/{{path}}/core_test.clj"   (render "core_test.clj"                config)]
+               ["dev/user.clj"                  (render "user.clj"                     config)]))))
