@@ -10,6 +10,9 @@
   :repl-options {:port 4555}
 
   :plugins []
+
+  :main {{full-name}}.app
+  :aot [{{full-name}}.app]
   
   :dependencies [[org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/clojure "1.9.0"]
