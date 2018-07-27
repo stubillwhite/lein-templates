@@ -12,7 +12,8 @@
             [clojure.tools.trace :refer [trace-ns untrace-ns]]
             [mount.core :as mount]
             [{{main-ns}}.config :refer [config]]
-            [{{main-ns}}.app :refer [nrepl]]))
+            [{{main-ns}}.app :refer [nrepl]]
+	    [taoensso.timbre :as timbre]))
 
 (defn print-methods [x]
   (->> x
@@ -29,6 +30,7 @@
   (edn/read-string (slurp fnam)))
 
 (defn start []
+  (timbre/merge-config! {:appenders {:println {:enabled? true}}})   
   (mount/start))
 
 (defn stop []
