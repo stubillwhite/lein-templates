@@ -12,7 +12,6 @@
   :plugins []
 
   :main {{full-name}}.app
-  :aot [{{full-name}}.app]
   
   :dependencies [[org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/clojure "1.9.0"]
@@ -21,5 +20,7 @@
                  [com.rpl/specter "1.1.1"]
                  [mount "0.1.12"]]
   
-  :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.10"]]
+  :profiles {:uberjar {:aot :all}
+
+             :dev {:dependencies [[org.clojure/tools.namespace "0.2.10"]]
                    :source-paths ["dev"]}})

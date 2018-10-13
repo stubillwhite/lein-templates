@@ -1,6 +1,7 @@
 (ns {{main-ns}}.core
   (:require
-    [taoensso.timbre :as timbre]))
+   [taoensso.timbre :as timbre]
+   [taoensso.timbre.appenders.core :as appenders]))
 
 (timbre/refer-timbre)
 
