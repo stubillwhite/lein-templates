@@ -18,7 +18,8 @@
                  [com.taoensso/timbre "4.10.0"]
                  [org.clojure/tools.trace "0.7.9"]
                  [com.rpl/specter "1.1.1"]
-                 [mount "0.1.12"]]
+                 [mount "0.1.12"]
+                 [com.taoensso/nippy "2.14.0"]]
   
   :profiles {:uberjar {:aot :all}
 
