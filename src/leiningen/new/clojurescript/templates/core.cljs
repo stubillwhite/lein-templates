@@ -2,25 +2,12 @@
   (:require
    [antizer.reagent :as ant]
    [{{main-ns}}.state :refer [state update-state!]]
+   [{{main-ns}}.navigation :as navigation]
    [goog.dom :as gdom]
    [reagent.core :as reagent :refer [atom]]))
 
-(defn increment-count []
-  (update-state! #(update-in % [:count] inc)))
-
-(defn decrement-count []
-  (update-state! #(update-in % [:count] dec)))
-
-;; TODO: Think about navigation
-
-(defn main-component []
-  [ant/form {:layout "inline"}
-   [ant/form-item {}
-    [ant/button {:type "primary" :on-click decrement-count} "Decrement"]]
-   [ant/form-item {}
-    [:h1 {} (:count @state)]]
-   [ant/form-item {}
-    [ant/button {:type "primary" :on-click increment-count} "Increment"]]])
+(defn app-view []
+  [navigation/navigation-view {}])
 
 ;; Infrastructure
 
@@ -28,7 +15,7 @@
   (gdom/getElement "app"))
 
 (defn mount [el]
-  (reagent/render-component [main-component] el))
+  (reagent/render-component [app-view] el))
 
 (defn mount-app-element []
   (when-let [el (get-app-element)]
