@@ -1,15 +1,15 @@
 (ns ^:figwheel-hooks {{main-ns}}.core
   (:require
    [antizer.reagent :as ant]
-   [{{main-ns}}.app-state :refer [app-state update-app-state!]]
+   [{{main-ns}}.state :refer [state update-state!]]
    [goog.dom :as gdom]
    [reagent.core :as reagent :refer [atom]]))
 
 (defn increment-count []
-  (update-app-state! #(update-in % [:count] inc)))
+  (update-state! #(update-in % [:count] inc)))
 
 (defn decrement-count []
-  (update-app-state! #(update-in % [:count] dec)))
+  (update-state! #(update-in % [:count] dec)))
 
 ;; TODO: Think about navigation
 
@@ -18,7 +18,7 @@
    [ant/form-item {}
     [ant/button {:type "primary" :on-click decrement-count} "Decrement"]]
    [ant/form-item {}
-    [:h1 {} (:count @app-state)]]
+    [:h1 {} (:count @state)]]
    [ant/form-item {}
     [ant/button {:type "primary" :on-click increment-count} "Increment"]]])
 
@@ -41,7 +41,7 @@
 ;; specify reload hook with ^;after-load metadata
 (defn ^:after-load on-reload []
   (mount-app-element)
-  ;; optionally touch your app-state to force rerendering depending on
+  ;; optionally touch your state to force rerendering depending on
   ;; your application
-  ;; (swap! app-state update-in [:__figwheel_counter] inc)
+  ;; (swap! state update-in [:__figwheel_counter] inc)
 )
