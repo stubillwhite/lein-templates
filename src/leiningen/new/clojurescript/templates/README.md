@@ -5,7 +5,9 @@
 - [X] Update clean target
 - [X] Add a basic button
 - [X] Add Antd components
-- [ ] Add routing
+- [ ] Check that rendering is working properly, consider splitting atoms
+- [ ] Check namespaces
+- [X] Add routing
 - [ ] Add integration test
 - [ ] Make notes on turning on browser templating of errors
 - [ ] Check all the files
@@ -15,16 +17,19 @@
 
 # ClojureScript Single Page Application #
 
-A basic ClojureScript single page application with batteries built in:
+A basic ClojureScript single-page application with batteries built in:
 
-- `figwheel-main` for development
-- `reagent` as an interface to React
-- `antizer` for the Ant Design React UI component library
-- `accountant` (https://github.com/venantius/accountant) for stuff
-- [secretary](https://github.com/clj-commons/secretary) for routing
+- Pretty UI components
+- Basic navigation pages
+- Browser history and navigation
 
+All of this is just plugging together the awesome work of others:
 
-All of this is just plugging together the awesome work of others.
+- [bhauman/figwheel-main](https://github.com/bhauman/figwheel-main) for development tooling
+- [reagent-project/reagent](https://github.com/reagent-project/reagent) to interface to React
+- [priornix/antizer](https://github.com/priornix/antizer) to interface to the Ant Design React UI component library
+- [venantius/accountant](https://github.com/venantius/accountant) for single-page application navigation
+- [clj-commons/secretary](https://github.com/clj-commons/secretary) for routing
 
 ## Set-up ##
 

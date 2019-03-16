@@ -11,11 +11,20 @@
 (defn decrement-count []
   (update-state! #(update-in % [:counter :count] dec)))
 
-(defn counter-view []
-  [ant/form {:layout "inline"}
-   [ant/form-item {}
-    [ant/button {:type "primary" :on-click decrement-count} "Drink less"]]
-   [ant/form-item {}
-    [:h1 {} (get-in @state [:counter :count])]]
-   [ant/form-item {}
-    [ant/button {:type "primary" :on-click increment-count} "Drink more"]]])
+(defn on-entry []
+  (js/console.log "Entering cookies page"))
+
+(defn on-exit []
+  (js/console.log "Exiting cookies page"))
+
+(defn view []
+  [:div
+   [:h3 "Drink some coffee!"]
+   [:p "How many cups?"]
+   [ant/form {:layout "inline"}
+    [ant/form-item {}
+     [ant/button {:type "primary" :on-click decrement-count} "Less"]]
+    [ant/form-item {}
+     [:h1 {} (get-in @state [:counter :count])]]
+    [ant/form-item {}
+     [ant/button {:type "primary" :on-click increment-count} "More"]]]])
