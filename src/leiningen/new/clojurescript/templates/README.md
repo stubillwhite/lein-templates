@@ -20,6 +20,9 @@ A basic ClojureScript single page application with batteries built in:
 - `figwheel-main` for development
 - `reagent` as an interface to React
 - `antizer` for the Ant Design React UI component library
+- `accountant` (https://github.com/venantius/accountant) for stuff
+- [secretary](https://github.com/clj-commons/secretary) for routing
+
 
 All of this is just plugging together the awesome work of others.
 

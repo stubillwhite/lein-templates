@@ -6,11 +6,20 @@
 
   :min-lein-version "2.7.1"
 
-  :dependencies [[org.clojure/clojure "1.10.0"]
+  :dependencies [;; Core
+                 [org.clojure/clojure "1.10.0"]
                  [org.clojure/clojurescript "1.10.339"]
+
+                 ;; UI framework and components
+                 [reagent "0.8.1"]
                  [antizer "0.3.1"]
-                 [etaoin "0.3.2"]
-                 [reagent "0.8.1"]]
+
+                 ;; Routing
+                 [clj-commons/secretary "1.2.4"]
+                 [venantius/accountant "0.2.4"]
+
+                 ;; TBD
+                 [etaoin "0.3.2"]]
 
   :source-paths ["src"]
 

@@ -1,14 +1,21 @@
 (ns {{main-ns}}.navigation
-  (:require [antizer.reagent :as ant]
+  (:require [accountant.core :as accountant]
+            [antizer.reagent :as ant]
             [{{main-ns}}.pages.cookies :as cookies]
             [{{main-ns}}.pages.counter :as counter]
             [{{main-ns}}.state :refer [state update-state!]]
-            [reagent.core :as reagent]))
+            [{{main-ns}}.utils :refer [index-by]]
+            [goog.events :as events]
+            [reagent.core :as reagent]
+            [secretary.core :as secretary :refer [dispatch!] :refer-macros [defroute]])
+  (:import goog.History
+           goog.history.EventType))
 
-;; The pages in the application
+;; Application pages
+
 (def pages
   [{:id          "counter"
-    :path        "/counter"
+    :path        "/#counter"
     :icon        "coffee"
     :label       "Drink coffee"
     :view-fn     counter/counter-view
@@ -16,18 +23,57 @@
     :on-exit-fn  #(println "Leaving the counter page")}
 
    {:id          "cookies"
-    :path        "/cookies"
+    :path        "/#cookies"
     :icon        "desktop"
     :label       "Write code"
     :view-fn     cookies/cookies-view
     :on-entry-fn #(print "Entering the cookies page")
     :on-exit-fn  #(println "Leaving the cookies page")}])
 
-;; TODO: Move to utils
-(defn index-by
-  "Returns xs in the form of a map, indexed by (f x)."
-  [f xs]
-  (into {} (for [x xs] [(f x) x])))
+;; Routing
+
+(defn set-page! [page]
+  (println "Selecting page" page)
+  (update-state! #(assoc-in % [:router :page] page)))
+
+(defn configure-routes! []
+  (secretary/set-config! :prefix "#")
+
+  (secretary/defroute home-path "/" []
+    (set-page! "counter"))
+
+  (secretary/defroute counter-path "/counter" []
+    (set-page! "counter"))
+
+  (secretary/defroute cookies-path "/cookies" []
+    (set-page! "cookies"))
+
+  (secretary/defroute cookie-path "/cookies/:id" [id]
+    (set-page! "cookies")))
+
+(defn- hook-browser-navigation!
+  "Add hooks to browser navigation. This must be called after routes are defined."
+  []
+  (doto (History.)
+    (events/listen EventType.NAVIGATE #(secretary/dispatch! (.-token %)))
+    (.setEnabled true)))
+
+(defn- configure-accountant! []
+  (accountant/configure-navigation! {:nav-handler       (fn [path] #(secretary/dispatch! path))
+                                     :path-exists?      (fn [path] #(secretary/locate-route path))
+                                     :reload-same-path? true}))
+
+(defn configure-navigation! []
+  (configure-routes!)
+  (hook-browser-navigation!)
+  (configure-accountant!))
+
+(defn open-current-page! []
+  (accountant/dispatch-current!))
+
+;; TODO Change println to js/console.log
+
+;; Navigation
 
 (def pages-by-id (index-by :id pages))
 
@@ -38,10 +84,14 @@
         source    (get pages-by-id source-id)
         target    (get pages-by-id target-id)
         exit-fn   (get source :on-exit-fn no-action)
-        entry-fn  (get target :on-entry-fn no-action)]
+        entry-fn  (get target :on-entry-fn no-action)
+        target-path (get target :path)]
     (exit-fn)
     (entry-fn)
-    (update-state! #(assoc-in % [:router :page] target-id))))
+    (println "Navigating to" target-path)
+    (println "sec path" (secretary/locate-route target-path))
+    (update-state! #(assoc-in % [:router :page] target-id))
+    (accountant/navigate! target-path)))
 
 (defn- navigate-to-clicked-page [event]
   (let [page (:key (js->clj event :keywordize-keys true))] 
