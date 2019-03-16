@@ -1,4 +1,4 @@
-(ns {{main-ns}}.pages.cookies
+(ns {{main-ns}}.pages.code
   (:require
    [antizer.reagent :as ant]
    [{{main-ns}}.state :refer [state update-state!]]
@@ -12,14 +12,10 @@
   (js/console.log "Exiting code page"))
 
 (defn- set-language! [lang]
-  (update-state! #(assoc-in @state [:cookies :language] lang)))
+  (update-state! #(assoc-in @state [:code :language] lang)))
 
 (defn- get-language []
-  (get-in @state [:cookies :language]))
-
-(defn- coding-message []
-  (if-let [language (get-language)]
-    (str "Let's hack some " language "!")))
+  (get-in @state [:code :language]))
 
 (defn view []
   [:div 
@@ -29,5 +25,4 @@
     [ant/select {:default-value (get-language) :on-change set-language! :style {:width "120px"}}
      [ant/select-option {:value "Clojure"} "Clojure"]
      [ant/select-option {:value "Scala"}   "Scala"]
-     [ant/select-option {:value "Kotlin"}  "Kotlin"]]]
-   [:p (coding-message)]])
+     [ant/select-option {:value "Kotlin"}  "Kotlin"]]]])

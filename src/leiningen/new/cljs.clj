@@ -1,13 +1,13 @@
-(ns leiningen.new.clojurescript
+(ns leiningen.new.cljs
   (:require [leiningen.new.templates :refer [renderer name-to-path ->files sanitize-ns project-name year]]
             [clojure.string :as string]))
 
-(def render (renderer "clojurescript/templates"))
+(def render (renderer "cljs/templates"))
 
 (defn common-file [fnam]
   (str "../../common/templates/" fnam))
 
-(defn clojurescript
+(defn cljs
   "Base starter project for ClojureScript."
   [name]
   (let [[groupId artifactId] (string/split name #"/" 2)

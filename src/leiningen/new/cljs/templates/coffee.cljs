@@ -1,4 +1,4 @@
-(ns {{main-ns}}.pages.counter
+(ns {{main-ns}}.pages.coffee
   (:require
    [antizer.reagent :as ant]
    [{{main-ns}}.state :refer [state update-state!]]
@@ -6,16 +6,16 @@
    [reagent.core :as reagent :refer [atom]]))
 
 (defn increment-count []
-  (update-state! #(update-in % [:counter :count] inc)))
+  (update-state! #(update-in % [:coffee :count] inc)))
 
 (defn decrement-count []
-  (update-state! #(update-in % [:counter :count] dec)))
+  (update-state! #(update-in % [:coffee :count] dec)))
 
 (defn on-entry []
-  (js/console.log "Entering cookies page"))
+  (js/console.log "Entering coffee page"))
 
 (defn on-exit []
-  (js/console.log "Exiting cookies page"))
+  (js/console.log "Exiting coffee page"))
 
 (defn view []
   [:div
@@ -25,6 +25,6 @@
     [ant/form-item {}
      [ant/button {:type "primary" :on-click decrement-count} "Less"]]
     [ant/form-item {}
-     [:h1 {} (get-in @state [:counter :count])]]
+     [:h1 {} (get-in @state [:coffee :count])]]
     [ant/form-item {}
      [ant/button {:type "primary" :on-click increment-count} "More"]]]])
