@@ -33,6 +33,7 @@
                ["src/{{path}}/state.cljs"               (render "state.cljs"        config)]
                ["src/{{path}}/core.cljs"                (render "core.cljs"         config)]
                ["src/{{path}}/navigation.cljs"          (render "navigation.cljs"   config)]
+               ["src/{{path}}/utils.cljs"               (render "utils.cljs"        config)]
                ["src/{{path}}/pages/cookies.cljs"       (render "cookies.cljs"      config)]
                ["src/{{path}}/pages/counter.cljs"       (render "counter.cljs"      config)]
                ["test/{{path}}/pages/counter_test.cljs" (render "counter_test.cljs" config)]
