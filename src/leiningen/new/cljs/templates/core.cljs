@@ -7,6 +7,7 @@
    [reagent.core :as reagent :refer [atom]]))
 
 ;; Application view
+;; --------------------------------------------------
 
 (defn- app-view
   "The root view of the application."
@@ -14,6 +15,7 @@
   [navigation/view {}])
 
 ;; Entry point
+;; --------------------------------------------------
 
 (defn- get-app-element []
   (gdom/getElement "app"))

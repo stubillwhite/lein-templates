@@ -11,8 +11,12 @@
   (:import goog.History
            goog.history.EventType))
 
-;; Application pages
+(declare set-page!)
 
+;; Routing configuration
+;; --------------------------------------------------
+
+;; Pages in the application in the order they should appear in the navigation menu
 (def pages
   [{:id          "coffee"
     :icon        "coffee"
@@ -28,20 +32,7 @@
     :on-entry-fn code/on-entry
     :on-exit-fn  code/on-exit}])
 
-(def pages-by-id (index-by :id pages))
-
-;; Routing
-
-(defn- set-page! [page params]
-  (let [{:keys [on-entry-fn]} (pages-by-id page)]
-    (js/console.log "secretary: Entering page" page "with params" params)
-    (on-entry-fn)
-    (update-state! #(-> %
-                      (assoc-in [:router :page] page)
-                      (assoc-in [:router :params] params)))))
-
-;; Routes from URL or navigate-to
-
+;; Routing handlers for when the application jumps directly to a URL.
 (defn configure-routes! []
   (secretary/set-config! :prefix "#")
 
@@ -56,6 +47,19 @@
 
   (secretary/defroute code-language-path "/code/:language" [language]
     (set-page! "code" {:language language})))
+
+;; Infrastructure
+;; --------------------------------------------------
+
+(def pages-by-id (index-by :id pages))
+
+(defn- set-page! [page params]
+  (let [{:keys [on-entry-fn]} (pages-by-id page)]
+    (js/console.log "secretary: Entering page" page "with params" params)
+    (update-state! #(-> %
+                      (assoc-in [:router :page] page)
+                      (assoc-in [:router :params] params)))
+    (on-entry-fn)))
 
 (defn- hook-browser-navigation!
   "Add hooks to browser navigation. This must be called after routes are
@@ -79,23 +83,21 @@
   (when (not is-reload) (hook-browser-navigation!))
   (configure-accountant!))
 
-;; Navigation
-
-(defn- no-action [])
-
-;; TODO: Pass in pages and search, remove pages-by-id
-(defn navigate-to [target-id params]
+(defn navigate-to
+  "Navigate to the target page and provide it with the specified params."
+  [target-id params]
   (let [source-id (get-in @state [:router :page])
         source    (get pages-by-id source-id)
-        target    (get pages-by-id target-id)
-        exit-fn   (get source :on-exit-fn no-action)
-        entry-fn  (get target :on-entry-fn no-action)]
-    (exit-fn)
-    (entry-fn)
+        target    (get pages-by-id target-id)]
+    (when-let [exit-fn (:on-exit-fn source)] (exit-fn))
+    (when-let [entry-fn (:on-entry-fn target)] (entry-fn))
     (update-state! #(-> %
                         (assoc-in [:router :page] target-id)
                         (assoc-in [:router :params] params)))
     (accountant/navigate! (str "/#" target-id))))
+
+;; View
+;; --------------------------------------------------
 
 (defn- navigate-to-clicked-page [event]
   (let [page (:key (js->clj event :keywordize-keys true))] 
@@ -114,8 +116,6 @@
 
 (defn- menu-item [id icon label]
   [ant/menu-item {:key id} (reagent/as-element [:span [ant/icon {:type icon}] label])])
-
-;; Public interface
 
 (defn view [] 
   [ant/layout

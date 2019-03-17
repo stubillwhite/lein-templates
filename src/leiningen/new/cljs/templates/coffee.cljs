@@ -12,10 +12,13 @@
   (update-state! #(update-in % [:coffee :count] dec)))
 
 (defn on-entry []
-  (js/console.log "Entering coffee page"))
+  (js/console.log "on-entry hook fired for coffee page"))
 
 (defn on-exit []
-  (js/console.log "Exiting coffee page"))
+  (js/console.log "on-exit hook fired for coffee page"))
+
+;; View
+;; --------------------------------------------------
 
 (defn view [params]
   [:div
