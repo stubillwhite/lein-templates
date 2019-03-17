@@ -34,8 +34,8 @@
                ["src/{{path}}/core.cljs"                (render "core.cljs"         config)]
                ["src/{{path}}/navigation.cljs"          (render "navigation.cljs"   config)]
                ["src/{{path}}/utils.cljs"               (render "utils.cljs"        config)]
-               ["src/{{path}}/pages/cookies.cljs"       (render "cookies.cljs"      config)]
-               ["src/{{path}}/pages/counter.cljs"       (render "counter.cljs"      config)]
+               ["src/{{path}}/pages/code.cljs"          (render "code.cljs"         config)]
+               ["src/{{path}}/pages/coffee.cljs"        (render "coffee.cljs"       config)]
                ["test/{{path}}/pages/counter_test.cljs" (render "counter_test.cljs" config)]
                ["test/{{path}}/test_runner.cljs"        (render "test_runner.cljs"  config)]
                ))))

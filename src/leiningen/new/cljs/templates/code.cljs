@@ -3,6 +3,8 @@
    [antizer.reagent :as ant]
    [{{main-ns}}.state :refer [state update-state!]]
    [goog.dom :as gdom]
+   [secretary.core :as secretary]
+   [accountant.core :as accountant]
    [reagent.core :as reagent :refer [atom]]))
 
 (defn on-entry []
@@ -11,18 +13,17 @@
 (defn on-exit []
   (js/console.log "Exiting code page"))
 
-(defn- set-language! [lang]
-  (update-state! #(assoc-in @state [:code :language] lang)))
+;; TODO: Needs refactoring into navigation
+(defn- set-language! [language]
+  (accountant/navigate! (str "#code/" language)))
 
-(defn- get-language []
-  (get-in @state [:code :language]))
-
-(defn view []
+(defn view [params]
   [:div 
    [:h3 "Write some code!"]
+   [:p {:style {:font-style "italic"}} "This page stores state in the URL rather than in the application state atom. This isn't something we should do often, but it can occasionlly be useful because it means URLs can be copied-and-pasted to others to reproduce the state of this page."]
    [:p "What shall we write stuff in today?"]
    [:div 
-    [ant/select {:default-value (get-language) :on-change set-language! :style {:width "120px"}}
+    [ant/select {:default-value (:language params) :on-change set-language! :style {:width "120px"}}
      [ant/select-option {:value "Clojure"} "Clojure"]
      [ant/select-option {:value "Scala"}   "Scala"]
      [ant/select-option {:value "Kotlin"}  "Kotlin"]]]])

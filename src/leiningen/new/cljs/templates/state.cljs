@@ -4,11 +4,9 @@
 
 ;; Application state
 (defonce state (atom {:router {:page "coffee"}
-                      :coffee {:count 0}
-                      :debug true}))
+                      :coffee {:count 0}}))
 
 (defn update-state! [f]
   (swap! state f)
-  (when (:debug @state)
-    (print @state)))
+  (js/console.log @state))
 

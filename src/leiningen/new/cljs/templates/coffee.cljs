@@ -17,9 +17,10 @@
 (defn on-exit []
   (js/console.log "Exiting coffee page"))
 
-(defn view []
+(defn view [params]
   [:div
    [:h3 "Drink some coffee!"]
+   [:p {:style {:font-style "italic"}} "This page stores state in the global state atom, so it retains state when navigated away from."]
    [:p "How many cups?"]
    [ant/form {:layout "inline"}
     [ant/form-item {}

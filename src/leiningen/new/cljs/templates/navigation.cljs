@@ -1,8 +1,8 @@
 (ns {{main-ns}}.navigation
   (:require [accountant.core :as accountant]
             [antizer.reagent :as ant]
-            [{{main-ns}}.pages.code :as cookies]
-            [{{main-ns}}.pages.coffee :as counter]
+            [{{main-ns}}.pages.code :as code]
+            [{{main-ns}}.pages.coffee :as coffee]
             [{{main-ns}}.state :refer [state update-state!]]
             [{{main-ns}}.utils :refer [index-by]]
             [goog.events :as events]
@@ -13,46 +13,49 @@
 
 ;; Application pages
 
-;; TODO: Merge these
-
 (def pages
   [{:id          "coffee"
-    :path        "/#coffee"
     :icon        "coffee"
     :label       "Drink coffee"
-    :view-fn     counter/view
-    :on-entry-fn counter/on-entry
-    :on-exit-fn  counter/on-exit}
+    :view-fn     coffee/view
+    :on-entry-fn coffee/on-entry
+    :on-exit-fn  coffee/on-exit}
 
    {:id          "code"
-    :path        "/#code"
     :icon        "desktop"
     :label       "Write code"
-    :view-fn     cookies/view
-    :on-entry-fn cookies/on-entry
-    :on-exit-fn  cookies/on-exit}])
+    :view-fn     code/view
+    :on-entry-fn code/on-entry
+    :on-exit-fn  code/on-exit}])
+
+(def pages-by-id (index-by :id pages))
 
 ;; Routing
 
-(defn set-page! [page]
-  (println "Selecting page" page)
-  (update-state! #(assoc-in % [:router :page] page)))
+(defn- set-page! [page params]
+  (let [{:keys [on-entry-fn]} (pages-by-id page)]
+    (js/console.log "secretary: Entering page" page "with params" params)
+    (on-entry-fn)
+    (update-state! #(-> %
+                      (assoc-in [:router :page] page)
+                      (assoc-in [:router :params] params)))))
 
-;; TODO: These should all use navigate to
+;; Routes from URL or navigate-to
+
 (defn configure-routes! []
   (secretary/set-config! :prefix "#")
 
   (secretary/defroute home-path "/" []
-    (set-page! "code"))
+    (set-page! "coffee" {}))
 
   (secretary/defroute coffee-path "/coffee" []
-    (set-page! "coffee"))
+    (set-page! "coffee" {}))
 
   (secretary/defroute code-path "/code" []
-    (set-page! "code"))
+    (set-page! "code" {}))
 
-  (secretary/defroute code-language-path "/code/:id" [id]
-    (set-page! "code")))
+  (secretary/defroute code-language-path "/code/:language" [language]
+    (set-page! "code" {:language language})))
 
 (defn- hook-browser-navigation!
   "Add hooks to browser navigation. This must be called after routes are
@@ -78,12 +81,10 @@
 
 ;; Navigation
 
-(def pages-by-id (index-by :id pages))
-
 (defn- no-action [])
 
 ;; TODO: Pass in pages and search, remove pages-by-id
-(defn navigate-to [target-id]
+(defn navigate-to [target-id params]
   (let [source-id (get-in @state [:router :page])
         source    (get pages-by-id source-id)
         target    (get pages-by-id target-id)
@@ -91,28 +92,32 @@
         entry-fn  (get target :on-entry-fn no-action)]
     (exit-fn)
     (entry-fn)
-    (update-state! #(assoc-in % [:router :page] target-id))
-    (accountant/navigate! (:path target))))
+    (update-state! #(-> %
+                        (assoc-in [:router :page] target-id)
+                        (assoc-in [:router :params] params)))
+    (accountant/navigate! (str "/#" target-id))))
 
 (defn- navigate-to-clicked-page [event]
   (let [page (:key (js->clj event :keywordize-keys true))] 
-    (navigate-to page)))
+    (navigate-to page {})))
 
-(defn- not-found-view [page-id]
+(defn- not-found-view [page-id params]
   [:div
    [:h3 "Page not found"]
    [:p (str "Unable to locate page '" page-id "'")]])
 
 (defn- current-page-view []
-  (let [page-id   (get-in @state [:router :page])
-        not-found (partial not-found-view page-id)
-        view-fn   (get-in pages-by-id [page-id :view-fn] not-found)]
-    (view-fn)))
+  (let [{:keys [page params]} (get-in @state [:router])
+        not-found (partial not-found-view page)
+        view-fn   (get-in pages-by-id [page :view-fn] not-found)]
+    (view-fn params)))
 
 (defn- menu-item [id icon label]
   [ant/menu-item {:key id} (reagent/as-element [:span [ant/icon {:type icon}] label])])
 
-(defn navigation-view [] 
+;; Public interface
+
+(defn view [] 
   [ant/layout
    [ant/affix
     [ant/menu {:mode "horizontal" :theme "dark" :selected-keys [(:page @state)]

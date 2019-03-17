@@ -6,12 +6,14 @@
    [goog.dom :as gdom]
    [reagent.core :as reagent :refer [atom]]))
 
-;; Main application view
+;; Application view
 
 (defn- app-view
   "The root view of the application."
   []
-  [navigation/navigation-view {}])
+  [navigation/view {}])
+
+;; Entry point
 
 (defn- get-app-element []
   (gdom/getElement "app"))
@@ -19,20 +21,22 @@
 (defn- mount [el]
   (reagent/render-component [app-view] el))
 
-(defn mount-app-element [is-reload]
+(defn mount-app-element
+  "Conditionally load the application if an 'app' element is present,
+  configuring hooks appropriately depending on whether this is a
+  hot-reload or a full reload."
+  [is-reload]
   (when-let [el (get-app-element)]
     (do
       (navigation/configure-navigation! is-reload)
       (mount el))))
 
-;; conditionally start your application based on the presence of an "app" element
-;; this is particularly helpful for testing this ns without launching the app
-(mount-app-element false)
-
-;; specify reload hook with ^;after-load metadata
-(defn ^:after-load on-reload []
+(defn ^:after-load on-reload
+  "Hook called on a hot-reload."
+  []
   (mount-app-element true)
-  ;; optionally touch your state to force rerendering depending on
-  ;; your application
+  ;; Optionally touch your state to force rerendering depending on your application
   ;; (swap! state update-in [:__figwheel_counter] inc)
 )
+
+(mount-app-element false)
