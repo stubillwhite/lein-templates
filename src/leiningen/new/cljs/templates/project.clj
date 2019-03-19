@@ -23,6 +23,13 @@
                  [figwheel-sidecar "0.5.18"]
                  [com.bhauman/rebel-readline "0.1.4"]]
 
+  :plugins [[lein-cljsbuild "1.1.7"]]
+
+  :cljsbuild {:builds [{:source-paths ["src"]
+                        :compiler {:output-to     "target/dist/main.js"
+                                   :optimizations :whitespace
+                                   :pretty-print  true}}]}
+
   :source-paths ["src"]
 
   :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/cljs-out"]

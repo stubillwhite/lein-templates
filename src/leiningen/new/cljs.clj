@@ -39,4 +39,5 @@
                ["test/{{path}}/pages/coffee_test.cljs"                  (render "coffee_test.cljs"             config)]
                ["test/{{path}}/test_runner.cljs"                        (render "test_runner.cljs"             config)]
                ["test/{{path}}/integration/coffee_integration_test.clj" (render "coffee_integration_test.clj"  config)]
+               ["test/{{path}}/integration/server.clj"                  (render "server.clj"                   config)]
                ))))
