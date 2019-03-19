@@ -1,9 +1,6 @@
-;; This test runner is intended to be run from the command line
 (ns {{main-ns}}.test-runner
-  (:require
-    ;; require all the namespaces that you want to test
-    [{{main-ns}}.pages.counter-test]
-    [figwheel.main.testing :refer [run-tests-async]]))
+  (:require {{main-ns}}.pages.coffee-test
+            [figwheel.main.testing :refer [run-tests-async]]))
 
 (defn -main [& args]
   (run-tests-async 5000))

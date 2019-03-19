@@ -27,8 +27,8 @@
    [:p "How many cups?"]
    [ant/form {:layout "inline"}
     [ant/form-item {}
-     [ant/button {:type "primary" :on-click decrement-count} "Less"]]
+     [ant/button {:id "dec" :type "primary" :on-click decrement-count} "Less"]]
     [ant/form-item {}
-     [:h1 {} (get-in @state [:coffee :count])]]
+     [:h1 {:id "count"} (get-in @state [:coffee :count])]]
     [ant/form-item {}
-     [ant/button {:type "primary" :on-click increment-count} "More"]]]])
+     [ant/button {:id "inc" :type "primary" :on-click increment-count} "More"]]]])

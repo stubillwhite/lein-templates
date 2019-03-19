@@ -18,8 +18,10 @@
                  [clj-commons/secretary "1.2.4"]
                  [venantius/accountant "0.2.4"]
 
-                 ;; TBD
-                 [etaoin "0.3.2"]]
+                 ;; Integration tests
+                 [etaoin "0.3.2"]
+                 [figwheel-sidecar "0.5.18"]
+                 [com.bhauman/rebel-readline "0.1.4"]]
 
   :source-paths ["src"]
 
@@ -30,6 +32,9 @@
             "fig:min"   ["run" "-m" "figwheel.main" "-O" "advanced" "-bo" "dev"]
             "fig:test"  ["run" "-m" "figwheel.main" "-co" "test.cljs.edn" "-m" {{main-ns}}.test-runner]}
 
+  :test-selectors {:default (complement :integration)
+                   :integration :integration}
+  
   :profiles {:dev {:dependencies [[com.bhauman/figwheel-main "0.1.9"]
                                   [com.bhauman/rebel-readline-cljs "0.1.4"]]
                    }})
