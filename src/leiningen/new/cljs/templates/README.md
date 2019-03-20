@@ -22,7 +22,7 @@ All of this is just plugging together the awesome work of others:
 - [venantius/accountant](https://github.com/venantius/accountant) for single-page application navigation
 - [clj-commons/secretary](https://github.com/clj-commons/secretary) for routing
 
-## Set-up ##
+## Debugging in the browser ##
 
 If you haven't previously done so, configure your browser to link preprocessed code to source:
 
@@ -32,7 +32,12 @@ If you haven't previously done so, configure your browser to link preprocessed c
     - Open the drop down menu (three dots) and select `Settings`
     - Tick `Enable Javascript source maps`
 
-## Overview
+With this done, you should now be able to set breakpoints in the code:
+
+- From the menu select `View` > `Developer Tools`
+- Select `Sources` tab
+- Expand `cljs-out` > `dev` > `foobar`
+- Click on the `.cljs` file (not the `.js` file) and set breakpoints as normal
 
 ## Running a REPL ##
 
@@ -51,5 +56,12 @@ tests pass or fail:
 
 ## Creating a production build ##
 
-- TBD
+- Run `lein cljsbuild once`
 
+## Running end-to-end integration tests ##
+
+- Run `lein cljsbuild once`
+- Run `lein test :integration`
+
+In the real world, we would need to stand up a back-end server to end-to-end test against. This is just a simple example
+that tests the front-end.
