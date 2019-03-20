@@ -23,6 +23,7 @@
       (->files config
                [".gitignore"                                            (render ".gitignore"                   config)]
                ["README.md"                                             (render "README.md"                    config)]
+               ["makefile"                                              (render "makefile"                     config)]
                ["dev.cljs.edn"                                          (render "dev.cljs.edn"                 config)]
                ["test.cljs.edn"                                         (render "test.cljs.edn"                config)]
                ["figwheel-main.edn"                                     (render "figwheel-main.edn"            config)]

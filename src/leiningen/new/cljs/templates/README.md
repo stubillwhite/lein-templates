@@ -1,12 +1,6 @@
-# StuW things to do #
-
-```
-- [ ] Add automatic CSS reloading
-- [X] Update clean target
-- [ ] Load stylesheets from a local resource
-```
-
 # ClojureScript Single Page Application #
+
+## Overview ##
 
 A basic ClojureScript single-page application with batteries built in:
 
@@ -21,6 +15,29 @@ All of this is just plugging together the awesome work of others:
 - [priornix/antizer](https://github.com/priornix/antizer) to interface to the Ant Design React UI component library
 - [venantius/accountant](https://github.com/venantius/accountant) for single-page application navigation
 - [clj-commons/secretary](https://github.com/clj-commons/secretary) for routing
+
+## Prerequisites ##
+
+To run the integration tests you will need Chrome installed, and ChromeDriver (a WebDriver for Chrome). It's possible to
+run the tests in other browsers, but you'll need to tweak the code.
+
+- `brew install chrome`
+- `brew cask install chromedriver`
+
+## Running a REPL ##
+
+- Run `lein fig:build`
+- Browse to http://localhost:9500/
+
+Thanks to `figwheel`, any source changes will automatically be compiled and the browser reloaded.
+
+## Running unit tests in the browser ##
+
+Thanks to `figwheel`, unit tests are automatically run in the browser. To view the results and receive notifications when
+tests pass or fail:
+
+- Start a REPL as described above
+- Browse to http://localhost:9500/figwheel-extra-main/auto-testing
 
 ## Debugging in the browser ##
 
@@ -38,21 +55,6 @@ With this done, you should now be able to set breakpoints in the code:
 - Select `Sources` tab
 - Expand `cljs-out` > `dev` > `foobar`
 - Click on the `.cljs` file (not the `.js` file) and set breakpoints as normal
-
-## Running a REPL ##
-
-- Run `lein fig:build`
-- Browse to http://localhost:9500/
-
-Thanks to `figwheel`, any source changes will automatically be compiled and the browser reloaded.
-
-## Running unit tests in the browser ##
-
-Thanks to `figwheel`, unit tests are automatically run in the browser. To view the results and receive notifications when
-tests pass or fail:
-
-- Start a REPL as described above
-- Browse to http://localhost:9500/figwheel-extra-main/auto-testing
 
 ## Creating a production build ##
 

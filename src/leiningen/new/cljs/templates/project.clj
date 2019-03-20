@@ -25,8 +25,8 @@
 
                  ;; Server to host the (empty) back-end so integration tests can run
                  [compojure "1.6.1"]
-                 [ring/ring-core "1.7.1"]
-                 [ring/ring-jetty-adapter "1.7.1"]]
+                 [ring/ring-core "1.7.0"]
+                 [ring/ring-jetty-adapter "1.7.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
 
@@ -47,5 +47,5 @@
   :test-selectors {:default (complement :integration)
                    :integration :integration}
   
-  :profiles {:dev {:dependencies [[com.bhauman/figwheel-main "0.1.9"]
+  :profiles {:dev {:dependencies [[com.bhauman/figwheel-main "0.2.0"]
                                   [com.bhauman/rebel-readline-cljs "0.1.4"]]}})
