@@ -3,15 +3,6 @@
 ```
 - [ ] Add automatic CSS reloading
 - [X] Update clean target
-- [X] Add a basic button
-- [X] Add Antd components
-- [ ] Check that rendering is working properly, consider splitting atoms
-- [ ] Check namespaces
-- [X] Add routing
-- [ ] Add integration test
-- [ ] Make notes on turning on browser templating of errors
-- [ ] Check all the files
-- [ ] Open the figwheel-extra-main/auto-testing page at startup
 - [ ] Load stylesheets from a local resource
 ```
 
@@ -33,7 +24,13 @@ All of this is just plugging together the awesome work of others:
 
 ## Set-up ##
 
-TODO: Talk about setting up your browser and enabling custom reporting
+If you haven't previously done so, configure your browser to link preprocessed code to source:
+
+- [Map Preprocessed Code to Source Code](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps?hl=en)
+    - From the menu select `View` > `Developer Tools`
+    - Select `Sources` tab
+    - Open the drop down menu (three dots) and select `Settings`
+    - Tick `Enable Javascript source maps`
 
 ## Overview
 
@@ -44,9 +41,9 @@ TODO: Talk about setting up your browser and enabling custom reporting
 
 Thanks to `figwheel`, any source changes will automatically be compiled and the browser reloaded.
 
-## Running tests in the browser ##
+## Running unit tests in the browser ##
 
-Thanks to `figwheel`, tests are automatically run in the browser. To view the results and receive notifications when
+Thanks to `figwheel`, unit tests are automatically run in the browser. To view the results and receive notifications when
 tests pass or fail:
 
 - Start a REPL as described above
@@ -54,5 +51,5 @@ tests pass or fail:
 
 ## Creating a production build ##
 
-- Run `lein clean`
-- Run `lein fig:min`
+- TBD
+

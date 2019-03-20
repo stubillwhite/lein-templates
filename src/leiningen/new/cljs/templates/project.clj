@@ -21,18 +21,23 @@
                  ;; Integration tests
                  [etaoin "0.3.2"]
                  [figwheel-sidecar "0.5.18"]
-                 [com.bhauman/rebel-readline "0.1.4"]]
+                 [com.bhauman/rebel-readline "0.1.4"]
+
+                 ;; Server to host the (empty) back-end so integration tests can run
+                 [compojure "1.6.1"]
+                 [ring/ring-core "1.7.1"]
+                 [ring/ring-jetty-adapter "1.7.1"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
 
   :cljsbuild {:builds [{:source-paths ["src"]
-                        :compiler {:output-to     "target/dist/main.js"
+                        :compiler {:output-to     "resources/dist/dev-main.js"
                                    :optimizations :whitespace
                                    :pretty-print  true}}]}
 
   :source-paths ["src"]
 
-  :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/cljs-out"]
+  :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/cljs-out" "resources/dist"]
 
   :aliases {"fig"       ["trampoline" "run" "-m" "figwheel.main"]
             "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]
@@ -43,6 +48,4 @@
                    :integration :integration}
   
   :profiles {:dev {:dependencies [[com.bhauman/figwheel-main "0.1.9"]
-                                  [com.bhauman/rebel-readline-cljs "0.1.4"]]
-                   }})
-
+                                  [com.bhauman/rebel-readline-cljs "0.1.4"]]}})
