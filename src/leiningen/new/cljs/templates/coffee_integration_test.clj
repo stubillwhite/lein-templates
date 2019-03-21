@@ -33,3 +33,29 @@
     (click :dec)
     (click :dec))
   (is (has-text? *driver* {:tag :h1 :id "count"} "-2")))
+
+(defn- get-drop-down-value [driver id]
+  (get-element-attr driver [{:tag :div :id id}
+                            {:class "ant-select-selection-selected-value"}] :title))
+
+(deftest ^:integration
+  url-sets-page-state
+  (doto *driver*
+    (go "http://localhost:9500/#code/Clojure")
+    (wait-visible {:id "app"}))
+  (is (= (get-drop-down-value *driver* "lang-select") "Clojure")))
+
+;; (deftest ^:integration
+;;   set-page-state-sets-url
+;;   (doto *driver*
+;;     (go "http://localhost:9500/#code/")
+;;     (wait-visible {:id "app"})
+;;     (fill {:id "lang-select"} "Kotlin"))
+;;   (is (= (get-drop-down-value *driver* "lang-select") "Clojure")))
+
+;; (defn- set-drop-down-value [driver id value]
+;;   (click driver [{:tag :div :id id}
+;;                  {:class "ant-select-selection__rendered"}])
+;;   (click driver [{:tag :div :id id}
+;;                  {:class "ant-select-dropdown-menu-item"}
+;;                  {:text value}]))
