@@ -10,11 +10,11 @@
     (binding [*driver* driver]
       (f))))
 
-;; Start and stop the driver for each test
-(use-fixtures :each server/with-server fixture-driver)
+;; Run the server for all tests in the namespace
+(use-fixtures :once server/with-server)
 
-;; Run the server for each test
-;; (use-fixtures :each server/with-server)
+;; Start and stop the driver for each test
+(use-fixtures :each fixture-driver)
 
 (deftest ^:integration
   drinking-more-coffee-increments-drink-count
