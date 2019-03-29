@@ -53,7 +53,7 @@ With this done, you should now be able to set breakpoints in the code:
 
 - From the menu select `View` > `Developer Tools`
 - Select `Sources` tab
-- Expand `cljs-out` > `dev` > `foobar`
+- Expand `cljs-out` > `dev` > `{{main-ns}}`
 - Click on the `.cljs` file (not the `.js` file) and set breakpoints as normal
 
 ## Creating a production build ##

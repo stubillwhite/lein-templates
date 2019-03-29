@@ -1,11 +1,6 @@
 (ns {{main-ns}}.pages.code
-  (:require
-   [antizer.reagent :as ant]
-   [{{main-ns}}.state :refer [state update-state!]]
-   [goog.dom :as gdom]
-   [secretary.core :as secretary]
-   [accountant.core :as accountant]
-   [reagent.core :as reagent :refer [atom]]))
+  (:require [accountant.core :as accountant]
+            [antizer.reagent :as ant]))
 
 (defn on-entry []
   (js/console.log "on-entry hook fired for code page"))

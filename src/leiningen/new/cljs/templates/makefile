@@ -14,11 +14,15 @@ help:
 		| sort \
 		| awk 'BEGIN {FS = ":.*?## "}; {printf "$(COLOR_BLUE)%-20s$(COLOR_NONE) %s\n", $$1, $$2}'
 
-.PHONY: clean test dist integration-test all
+.PHONY: clean repl test dist integration-test all
 
 clean: ## Remove all built artefacts
 	@echo 'Removing built artefacts'
 	@lein clean
+
+repl: ## Launch a REPL
+	@echo 'Launching a REPL'
+	@lein fig:build
 
 test: ## Run unit tests
 	@echo 'Running unit tests'

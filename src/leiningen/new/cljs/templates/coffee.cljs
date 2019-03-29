@@ -1,15 +1,12 @@
 (ns {{main-ns}}.pages.coffee
-  (:require
-   [antizer.reagent :as ant]
-   [{{main-ns}}.state :refer [state update-state!]]
-   [goog.dom :as gdom]
-   [reagent.core :as reagent :refer [atom]]))
+  (:require [antizer.reagent :as ant]
+            [{{main-ns}}.state :refer [state update-state!]]))
 
 (defn increment-count []
-  (update-state! #(update-in % [:coffee :count] inc)))
+  (update-state! update-in [:coffee :count] inc))
 
 (defn decrement-count []
-  (update-state! #(update-in % [:coffee :count] dec)))
+  (update-state! update-in [:coffee :count] dec))
 
 (defn on-entry []
   (js/console.log "on-entry hook fired for coffee page"))
@@ -32,3 +29,5 @@
      [:h1 {:id "count"} (get-in @state [:coffee :count])]]
     [ant/form-item {}
      [ant/button {:id "inc" :type "primary" :on-click increment-count} "More"]]]])
+
+
