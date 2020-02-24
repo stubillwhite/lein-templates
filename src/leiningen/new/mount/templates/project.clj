@@ -13,15 +13,14 @@
 
   :main {{full-name}}.app
   
-  :dependencies [[org.clojure/tools.nrepl "0.2.13"]
+  :dependencies [[nrepl "0.3.1"]
                  [org.clojure/clojure "1.9.0"]
                  [com.taoensso/timbre "4.10.0"]
-                 [org.clojure/tools.trace "0.7.9"]
-                 [com.rpl/specter "1.1.1"]
-                 [mount "0.1.12"]
+                 [org.clojure/tools.trace "0.7.10"]
+                 [mount "0.1.16"]
                  [com.taoensso/nippy "2.14.0"]]
   
   :profiles {:uberjar {:aot :all}
 
-             :dev {:dependencies [[org.clojure/tools.namespace "0.2.10"]]
+             :dev {:dependencies [[org.clojure/tools.namespace "1.0.0"]]
                    :source-paths ["dev"]}})
