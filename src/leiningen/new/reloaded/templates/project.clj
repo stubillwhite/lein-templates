@@ -11,11 +11,11 @@
 
   :plugins []
   
-  :dependencies [[org.clojure/tools.nrepl "0.2.12"]
-                 [org.clojure/clojure "1.9.0-alpha11"]
-                 [com.taoensso/timbre "4.7.4"]
-                 [org.clojure/tools.trace "0.7.9"]
-                 [com.rpl/specter "0.12.0"]]
+  :dependencies [[org.clojure/tools.nrepl "0.2.13"]
+                 [org.clojure/clojure "1.11.1"]
+                 [com.taoensso/timbre "6.3.1"]
+                 [org.clojure/tools.trace "0.7.11"]
+                 [com.rpl/specter "1.1.4"]]
   
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.10"]]
                    :source-paths ["dev"]}})
